@@ -27,9 +27,9 @@ public class ClinicalHistoryRestController {
     }
 
 
-    @PostMapping
-    public ResponseEntity<Void> saveClinicalHistory(@RequestBody ClinicalHistoryRequest clinicalHistory, @RequestParam Long idPatient) {
-        clinicalHistoryService.saveClinicalHistory(clinicalHistory, idPatient);
+    @PutMapping
+    public ResponseEntity<Void> updateClinicalHistory(@RequestBody ClinicalHistoryRequest clinicalHistory, @RequestParam Long idPatient) {
+        clinicalHistoryService.updateClinicalHistory(clinicalHistory, idPatient);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

@@ -14,6 +14,7 @@ public class QuoteRequest {
 
     private Long idProcedure;
 
+    private String clinicalHistoryDescription;
 //    private List<Long> idProcedure; luego veo si se puede agregar varios procedimiento al cliente
 
     private LocalDateTime date;

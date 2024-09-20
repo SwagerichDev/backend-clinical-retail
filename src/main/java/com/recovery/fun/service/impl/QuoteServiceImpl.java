@@ -3,11 +3,13 @@ package com.recovery.fun.service.impl;
 import com.recovery.fun.dto.request.QuoteRequest;
 import com.recovery.fun.dto.response.QuotePageResponse;
 import com.recovery.fun.dto.response.QuoteResponse;
+import com.recovery.fun.entity.ClinicalHistory;
 import com.recovery.fun.entity.Patient;
 import com.recovery.fun.entity.Procedure;
 import com.recovery.fun.entity.Quote;
 import com.recovery.fun.proyection.QuoteProyection;
 import com.recovery.fun.proyection.QuoteProyectionDto;
+import com.recovery.fun.repository.ClinicalHistoryRepository;
 import com.recovery.fun.repository.PatientRepository;
 import com.recovery.fun.repository.ProcedureRepository;
 import com.recovery.fun.repository.QuoteRepository;
@@ -19,6 +21,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +37,8 @@ public class QuoteServiceImpl implements QuoteService {
 
     private final ProcedureRepository procedureRepository;
 
+    private final ClinicalHistoryRepository clinicalHistoryRepository;
+
     /**
      * Crear una cita
      *
@@ -45,13 +50,22 @@ public class QuoteServiceImpl implements QuoteService {
     public QuoteResponse createQoute(QuoteRequest quote) {
         Patient patient = patientRepository.findById(quote.getIdPatient()).orElseThrow(() -> new RuntimeException("Patient not found"));
         Procedure procedure = procedureRepository.findById(quote.getIdProcedure()).orElseThrow(() -> new RuntimeException("Procedure not found"));
+
+        ClinicalHistory clinicalHistory = ClinicalHistory.builder()
+                .description(quote.getClinicalHistoryDescription())
+                .datee(LocalDate.now())
+                .patient(patient)
+                .build();
         // AQUI SUPONGAMOS QUE EL CLIENTE YA HA PAGADO Y SE QUIERE agendar la cita
         Quote quoteToSave = Quote.builder()
                 .datee(quote.getDate())
                 .patient(patient)
                 .procedure(procedure)
+                .clinicalHistory(clinicalHistory)
                 .status(true)
                 .build();
+
+        clinicalHistoryRepository.save(clinicalHistory);
         quoteRepository.save(quoteToSave);
         return new QuoteResponse(quoteToSave.getIdQuote(), quoteToSave.getDatee(),quoteToSave.isStatus());
     }

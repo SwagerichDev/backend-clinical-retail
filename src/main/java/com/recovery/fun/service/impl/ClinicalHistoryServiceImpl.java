@@ -30,7 +30,7 @@ public class ClinicalHistoryServiceImpl implements ClinicalHistoryService {
 
     @Override
     @Transactional
-    public void saveClinicalHistory(ClinicalHistoryRequest clinicalHistory, Long idPatient) {
+    public void updateClinicalHistory(ClinicalHistoryRequest clinicalHistory, Long idPatient) {
         Patient patient = patientRepository.findById(idPatient).orElseThrow(() -> new RuntimeException("Patient not found"));
 
         ClinicalHistory clinicalHistoryEntity = ClinicalHistory.builder()

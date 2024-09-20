@@ -10,5 +10,5 @@ public interface ClinicalHistoryService {
     List<ClinicalHistory> fetchClinicalHistoryByPatientId(Long idPatient);
 
 
-    void saveClinicalHistory(ClinicalHistoryRequest clinicalHistory, Long idPatient);
+    void updateClinicalHistory(ClinicalHistoryRequest clinicalHistory, Long idPatient);
 }

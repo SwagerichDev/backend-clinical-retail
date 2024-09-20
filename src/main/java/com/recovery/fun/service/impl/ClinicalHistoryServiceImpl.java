@@ -3,7 +3,6 @@ package com.recovery.fun.service.impl;
 import com.recovery.fun.dto.request.ClinicalHistoryRequest;
 import com.recovery.fun.entity.ClinicalHistory;
 import com.recovery.fun.entity.Patient;
-import com.recovery.fun.entity.Procedure;
 import com.recovery.fun.repository.ClinicalHistoryRepository;
 import com.recovery.fun.repository.PatientRepository;
 import com.recovery.fun.service.ClinicalHistoryService;
@@ -30,7 +29,7 @@ public class ClinicalHistoryServiceImpl implements ClinicalHistoryService {
 
     @Override
     @Transactional
-    public void saveClinicalHistory(ClinicalHistoryRequest clinicalHistory, Long idPatient) {
+    public void updateClinicalHistory(ClinicalHistoryRequest clinicalHistory, Long idPatient) {
         Patient patient = patientRepository.findById(idPatient).orElseThrow(() -> new RuntimeException("Patient not found"));
 
         ClinicalHistory clinicalHistoryEntity = ClinicalHistory.builder()

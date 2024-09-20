@@ -3,7 +3,6 @@ package com.recovery.fun.service.impl;
 import com.recovery.fun.dto.request.ClinicalHistoryRequest;
 import com.recovery.fun.entity.ClinicalHistory;
 import com.recovery.fun.entity.Patient;
-import com.recovery.fun.entity.Procedure;
 import com.recovery.fun.repository.ClinicalHistoryRepository;
 import com.recovery.fun.repository.PatientRepository;
 import com.recovery.fun.service.ClinicalHistoryService;

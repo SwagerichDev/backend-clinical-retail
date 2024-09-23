@@ -1,6 +1,7 @@
 package com.recovery.fun.service.impl;
 
 import com.recovery.fun.dto.request.ClinicalHistoryRequest;
+import com.recovery.fun.dto.response.ClinicalHistoryResponse;
 import com.recovery.fun.entity.ClinicalHistory;
 import com.recovery.fun.entity.Patient;
 import com.recovery.fun.repository.ClinicalHistoryRepository;
@@ -29,14 +30,21 @@ public class ClinicalHistoryServiceImpl implements ClinicalHistoryService {
 
     @Override
     @Transactional
-    public void updateClinicalHistory(ClinicalHistoryRequest clinicalHistory, Long idPatient) {
-        Patient patient = patientRepository.findById(idPatient).orElseThrow(() -> new RuntimeException("Patient not found"));
-
-        ClinicalHistory clinicalHistoryEntity = ClinicalHistory.builder()
-                .description(clinicalHistory.getDescription())
-                .datee(LocalDate.now())
-                .patient(patient)
-                .build();
+    public void updateClinicalHistory(ClinicalHistoryRequest clinicalHistory, Long idClinicalHistory) {
+        ClinicalHistory clinicalHistoryEntity = clinicalHistoryRepository.findById(idClinicalHistory)
+                .map(ch -> {
+                    ch.setDescription(clinicalHistory.getDescription());
+                    ch.setDatee(LocalDate.now());
+                    return ch;
+                }).orElseThrow(() -> new RuntimeException("Clinical history not found"));
         clinicalHistoryRepository.save(clinicalHistoryEntity);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ClinicalHistoryResponse findById(Long id) {
+       return clinicalHistoryRepository.findById(id)
+                .map(ch -> new ClinicalHistoryResponse(ch.getDescription(), ch.getDatee()))
+                .orElseThrow(() -> new RuntimeException("Clinical history not found"));
     }
 }

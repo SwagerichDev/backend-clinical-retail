@@ -19,4 +19,9 @@ public interface QuoteProyectionDto {
     Long getIdProcedure();
 
     String getProcedureName();
+
+
+    Long  getIdClinicalHistory();
+
+    String  getDescription();
 }

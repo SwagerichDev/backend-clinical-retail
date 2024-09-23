@@ -1,6 +1,7 @@
 package com.recovery.fun.controller;
 
 import com.recovery.fun.dto.request.ClinicalHistoryRequest;
+import com.recovery.fun.dto.response.ClinicalHistoryResponse;
 import com.recovery.fun.entity.ClinicalHistory;
 import com.recovery.fun.service.ClinicalHistoryService;
 import org.springframework.http.HttpStatus;
@@ -27,10 +28,15 @@ public class ClinicalHistoryRestController {
     }
 
 
-    @PutMapping
-    public ResponseEntity<Void> updateClinicalHistory(@RequestBody ClinicalHistoryRequest clinicalHistory, @RequestParam Long idPatient) {
-        clinicalHistoryService.updateClinicalHistory(clinicalHistory, idPatient);
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> updateClinicalHistory(@RequestBody ClinicalHistoryRequest clinicalHistory, @PathVariable Long id) {
+        clinicalHistoryService.updateClinicalHistory(clinicalHistory,id);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ClinicalHistoryResponse> findById(@PathVariable Long id) {
+        return new ResponseEntity<>(clinicalHistoryService.findById(id), HttpStatus.OK);
     }
 
 }

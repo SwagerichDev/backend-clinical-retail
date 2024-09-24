@@ -3,16 +3,10 @@ package com.recovery.fun.service.impl;
 import com.recovery.fun.dto.request.QuoteRequest;
 import com.recovery.fun.dto.response.QuotePageResponse;
 import com.recovery.fun.dto.response.QuoteResponse;
-import com.recovery.fun.entity.ClinicalHistory;
-import com.recovery.fun.entity.Patient;
-import com.recovery.fun.entity.Procedure;
-import com.recovery.fun.entity.Quote;
+import com.recovery.fun.entity.*;
 
 import com.recovery.fun.proyection.QuoteProyectionDto;
-import com.recovery.fun.repository.ClinicalHistoryRepository;
-import com.recovery.fun.repository.PatientRepository;
-import com.recovery.fun.repository.ProcedureRepository;
-import com.recovery.fun.repository.QuoteRepository;
+import com.recovery.fun.repository.*;
 import com.recovery.fun.service.QuoteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -39,6 +33,8 @@ public class QuoteServiceImpl implements QuoteService {
 
     private final ClinicalHistoryRepository clinicalHistoryRepository;
 
+    private final DentistRepository dentistRepository;
+
     /**
      * Crear una cita
      *
@@ -50,6 +46,7 @@ public class QuoteServiceImpl implements QuoteService {
     public QuoteResponse createQoute(QuoteRequest quote) {
         Patient patient = patientRepository.findById(quote.getIdPatient()).orElseThrow(() -> new RuntimeException("Patient not found"));
         Procedure procedure = procedureRepository.findById(quote.getIdProcedure()).orElseThrow(() -> new RuntimeException("Procedure not found"));
+        Dentist dentist = dentistRepository.findById(quote.getIdDentist()).orElseThrow(() -> new RuntimeException("Dentist not found"));
 
         ClinicalHistory clinicalHistory = ClinicalHistory.builder()
                 .description(quote.getClinicalHistoryDescription())
@@ -62,6 +59,7 @@ public class QuoteServiceImpl implements QuoteService {
                 .patient(patient)
                 .procedure(procedure)
                 .clinicalHistory(clinicalHistory)
+                .dentist(dentist)
                 .status(true)
                 .build();
 

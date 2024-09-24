@@ -40,6 +40,10 @@ public class Quote implements Serializable {
     @JoinColumn(name = "id_clinical_history")
     private ClinicalHistory clinicalHistory;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_dentist")
+    private Dentist dentist;
+
     @Override
     public String toString() {
         return "Quote{" +

@@ -23,8 +23,8 @@ public class DentistRestController {
         return new ResponseEntity<>(ApiResponse.create("Dentist Create Succefull",dentistService.save(dentistRequest)), HttpStatus.CREATED);
     }
 
-    @GetMapping
-    public ResponseEntity<ApiResponse> getDentists() {
-        return new ResponseEntity<>(ApiResponse.ok("get Dentists And Specialty succefull", dentistService.fetchAllDentistAndSpecialty()), HttpStatus.OK);
+    @GetMapping("/{idSpecialty}")
+    public ResponseEntity<ApiResponse> getDentists(@PathVariable Long idSpecialty) {
+        return new ResponseEntity<>(ApiResponse.ok("get Dentists And Specialty succefull", dentistService.fetchAllDentistAndSpecialty(idSpecialty)), HttpStatus.OK);
     }
 }

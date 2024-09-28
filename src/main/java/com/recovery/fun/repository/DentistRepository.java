@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface DentistRepository extends JpaRepository<Dentist, Long> {
 
-    @Query("SELECT d.idDentist as idDentist, d.name as name, d.lastName as lastName, s.name as specialty,d.status as status FROM Dentist d JOIN  d.specialty s")
-    List<DentistProyection> fetchAllDentistAndSpecialty();
+    @Query("SELECT d.idDentist as idDentist, d.name as name, d.lastName as lastName, s.name as specialty,d.status as status FROM Dentist d JOIN  d.specialty s  WHERE d.specialty.idSpecialty =:idSpecialty")
+    List<DentistProyection> fetchAllDentistAndSpecialty(Long idSpecialty);
 }

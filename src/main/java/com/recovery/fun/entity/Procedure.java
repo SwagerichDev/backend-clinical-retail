@@ -32,6 +32,10 @@ public class Procedure implements Serializable {
     @Column(precision = 10, scale = 2)
     private BigDecimal price;
 
+    @ManyToOne
+    @JoinColumn(name = "id_specialty")
+    private Specialty specialty;
+
     @JsonIgnore
     @OneToMany(mappedBy = "procedure")
     private List<Quote> quotes = new ArrayList<>();

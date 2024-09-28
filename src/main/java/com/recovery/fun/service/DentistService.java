@@ -11,5 +11,5 @@ public interface DentistService {
 
     DentistResponse save(DentistRequest dentistRequest);
 
-    List<DentistProyection> fetchAllDentistAndSpecialty();
+    List<DentistProyection> fetchAllDentistAndSpecialty(Long idSpecialty);
 }

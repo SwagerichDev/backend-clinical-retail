@@ -1,6 +1,7 @@
 package com.recovery.fun.dto.request;
 
 import com.recovery.fun.entity.Procedure;
+import com.recovery.fun.entity.Specialty;
 import lombok.Builder;
 import lombok.Data;
 
@@ -15,6 +16,8 @@ public class ProcedureRequest {
     private String description;
 
     private BigDecimal price;
+
+    private Long idSpecialty;
 
 
     public static ProcedureRequest fromEntity(Procedure procedure){
@@ -35,6 +38,7 @@ public class ProcedureRequest {
         return Procedure.builder()
                 .name(procedureRequest.getName())
                 .description(procedureRequest.getDescription())
+                .specialty(Specialty.builder().idSpecialty(procedureRequest.getIdSpecialty()).build())
                 .price(procedureRequest.getPrice())
                 .build();
     }

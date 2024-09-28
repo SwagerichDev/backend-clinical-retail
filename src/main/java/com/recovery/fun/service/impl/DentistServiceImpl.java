@@ -47,8 +47,8 @@ public class DentistServiceImpl implements DentistService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<DentistProyection> fetchAllDentistAndSpecialty() {
-        return dentistRepository.fetchAllDentistAndSpecialty();
+    public List<DentistProyection> fetchAllDentistAndSpecialty(Long idSpecialty) {
+        return dentistRepository.fetchAllDentistAndSpecialty(idSpecialty);
     }
 
 }

@@ -24,4 +24,6 @@ public interface QuoteProyectionDto {
     Long  getIdClinicalHistory();
 
     String  getDescription();
+
+    String getfullName();
 }

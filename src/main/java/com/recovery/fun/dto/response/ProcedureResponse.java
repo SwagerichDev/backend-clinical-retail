@@ -6,5 +6,8 @@ public record ProcedureResponse(
         Long idProcedure,
         String name,
         String description,
-        BigDecimal price) {
+        BigDecimal price,
+        String specialty,
+        Long idSpecialty
+) {
 }

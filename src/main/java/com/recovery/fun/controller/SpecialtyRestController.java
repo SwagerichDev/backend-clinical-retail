@@ -29,4 +29,14 @@ public class SpecialtyRestController {
     public ResponseEntity<ApiResponse> getSpecialties() {
         return new ResponseEntity<>(ApiResponse.ok("get Specialties succefull", specialtyService.findAll()), HttpStatus.OK);
     }
+
+    @GetMapping("/page")
+    public ResponseEntity<ApiResponse> getSpecialtiesPage(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size) {
+        return new ResponseEntity<>(ApiResponse.ok("get Specialties succefull", specialtyService.findAllPage(size,page)), HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse> updateSpecialty(@RequestBody Specialty specialty, @PathVariable Long id) {
+        return new ResponseEntity<>(ApiResponse.ok("Specialty Update Succefull", specialtyService.update(specialty, id)), HttpStatus.CREATED);
+    }
 }

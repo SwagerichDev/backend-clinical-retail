@@ -24,7 +24,17 @@ public class DentistRestController {
     }
 
     @GetMapping("/{idSpecialty}")
-    public ResponseEntity<ApiResponse> getDentists(@PathVariable Long idSpecialty) {
+    public ResponseEntity<ApiResponse> getDentistsAndSpecialty(@PathVariable Long idSpecialty) {
         return new ResponseEntity<>(ApiResponse.ok("get Dentists And Specialty succefull", dentistService.fetchAllDentistAndSpecialty(idSpecialty)), HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<ApiResponse> getDentistsPage(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size) {
+        return new ResponseEntity<>(ApiResponse.ok("get Dentists succefull", dentistService.findAllPage(page, size)), HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse> updateDentist(@RequestBody DentistRequest dentistRequest, @PathVariable Long id) {
+        return new ResponseEntity<>(ApiResponse.create("Dentist Update Succefull", dentistService.update(dentistRequest, id)), HttpStatus.CREATED);
     }
 }

@@ -8,6 +8,7 @@ import com.recovery.fun.service.SpecialtyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,7 +53,7 @@ public class SpecialtyServiceImpl implements SpecialtyService {
     @Override
     @Transactional(readOnly = true)
     public SpecialtyPageResponse findAllPage(int page, int size) {
-        PageRequest pageRequest = PageRequest.of(page, size);
+        PageRequest pageRequest = PageRequest.of(page, size).withSort(Sort.Direction.ASC, "idSpecialty");
         Page<Specialty> pages = specialtyRepository.findAll(pageRequest);
         List<SpecialtyResponse> specialtyResponses = pages.getContent().stream().map(specialty -> new SpecialtyResponse(specialty.getIdSpecialty(), specialty.getName())).toList();
         Map<String, Object> convert = Map.of(

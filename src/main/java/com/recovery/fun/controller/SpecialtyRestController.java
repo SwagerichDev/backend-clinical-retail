@@ -32,11 +32,16 @@ public class SpecialtyRestController {
 
     @GetMapping("/page")
     public ResponseEntity<ApiResponse> getSpecialtiesPage(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size) {
-        return new ResponseEntity<>(ApiResponse.ok("get Specialties succefull", specialtyService.findAllPage(size,page)), HttpStatus.OK);
+        return new ResponseEntity<>(ApiResponse.ok("get Specialties succefull", specialtyService.findAllPage(page,size)), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse> updateSpecialty(@RequestBody Specialty specialty, @PathVariable Long id) {
         return new ResponseEntity<>(ApiResponse.ok("Specialty Update Succefull", specialtyService.update(specialty, id)), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse> getSpecialty(@PathVariable Long id) {
+        return new ResponseEntity<>(ApiResponse.ok("get Specialty succefull", specialtyService.findById(id)), HttpStatus.OK);
     }
 }

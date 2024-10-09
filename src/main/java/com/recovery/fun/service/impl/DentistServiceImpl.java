@@ -70,6 +70,8 @@ public class DentistServiceImpl implements DentistService {
                 p.getEmail(),
                 p.getPhone(),
                 p.isStatus(),
+                p.getDni(),
+                p.getSpecialty().getIdSpecialty(),
                 p.getSpecialty().getName())).toList();
         Map<String, Object> response = Map.of(
                 "totalPages", pages.getTotalPages(),
@@ -96,5 +98,29 @@ public class DentistServiceImpl implements DentistService {
             return new DentistResponse(saveDentist.getIdDentist(), saveDentist.getName(), saveDentist.getLastName(), saveDentist.getDateOfBirth());
         }).orElseThrow(() -> new RuntimeException("Specialty not found"));
 
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public DentistResponse findById(Long idDentist) {
+        return dentistRepository.findById(idDentist)
+                .map(dentist -> new DentistResponse(dentist.getIdDentist(),
+                        dentist.getName(),
+                        dentist.getLastName(),
+                        dentist.getDateOfBirth(),
+                        dentist.getEmail(),
+                        dentist.getPhone(),
+                        dentist.isStatus(),
+                        dentist.getDni(),
+                        dentist.getSpecialty().getIdSpecialty(),
+                        dentist.getSpecialty().getName()))
+                .orElseThrow(() -> new RuntimeException("Dentist not found"));
+    }
+
+    @Override
+    public void enabledOrDisabledDentist(Long idDentist, boolean status) {
+        Dentist dentist = dentistRepository.findById(idDentist).orElseThrow(() -> new RuntimeException("Dentist not found"));
+        dentist.setStatus(status);
+        dentistRepository.save(dentist);
     }
 }

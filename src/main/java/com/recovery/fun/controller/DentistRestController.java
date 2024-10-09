@@ -37,4 +37,16 @@ public class DentistRestController {
     public ResponseEntity<ApiResponse> updateDentist(@RequestBody DentistRequest dentistRequest, @PathVariable Long id) {
         return new ResponseEntity<>(ApiResponse.create("Dentist Update Succefull", dentistService.update(dentistRequest, id)), HttpStatus.CREATED);
     }
+
+    @GetMapping("/dentist/{id}")
+    public ResponseEntity<ApiResponse> getDentist(@PathVariable Long id) {
+        return new ResponseEntity<>(ApiResponse.ok("get Dentist succefull", dentistService.findById(id)), HttpStatus.OK);
+    }
+
+    @PatchMapping("/disabled-enabled/{id}")
+    public ResponseEntity<ApiResponse> disabledOrEnabled(@PathVariable Long id, @RequestParam boolean status) {
+        dentistService.enabledOrDisabledDentist(id, status);
+        var message = status ? "Dentist enabled succefull" : "Dentist disabled succefull";
+        return new ResponseEntity<>(ApiResponse.ok(message,null), HttpStatus.OK);
+    }
 }

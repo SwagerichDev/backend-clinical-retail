@@ -17,4 +17,8 @@ public interface DentistService {
     DentistPageResponse findAllPage(int page, int size);
 
     DentistResponse update(DentistRequest dentistRequest, Long idDentist);
+
+    DentistResponse findById(Long idDentist);
+
+    void enabledOrDisabledDentist(Long idDentist, boolean status);
 }
